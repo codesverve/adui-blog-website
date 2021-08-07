@@ -3,10 +3,7 @@
     <TransparentCard>
       <div class="info_box">
         <div class="info_item">
-          <a-avatar :size="64">
-            <template #icon>
-              <UserOutlined />
-            </template>
+          <a-avatar :size="64" src="https://adui-blog.oss-cn-beijing.aliyuncs.com/avatar/adui_logo.png">
           </a-avatar>
         </div>
         <div class="info_item">
@@ -44,34 +41,34 @@
       <div>来自一个前端“BUG精”的技术分享&日常Bug记录...</div>
     </TransparentCard>
 
-    <a-affix :offset-top="top">
-      <TransparentCard style="max-height: 500px;overflow-y: auto;">
-        <a-timeline>
-          <a-timeline-item color="green">Create a services site 2015-09-01</a-timeline-item>
-          <a-timeline-item color="green">Create a services site 2015-09-01</a-timeline-item>
-          <a-timeline-item color="red">
-            <p>Solve initial network problems 1</p>
-            <p>Solve initial network problems 2</p>
-            <p>Solve initial network problems 3 2015-09-01</p>
-          </a-timeline-item>
-          <a-timeline-item>
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </a-timeline-item>
-          <a-timeline-item color="gray">
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </a-timeline-item>
-          <a-timeline-item color="gray">
-            <p>Technical testing 1</p>
-            <p>Technical testing 2</p>
-            <p>Technical testing 3 2015-09-01</p>
-          </a-timeline-item>
-        </a-timeline>
-      </TransparentCard>
-    </a-affix>
+    <!--    <a-affix :offset-top="top">-->
+    <!--      <TransparentCard style="max-height: 500px;overflow-y: auto;">-->
+    <!--        <a-timeline>-->
+    <!--          <a-timeline-item color="green">Create a services site 2015-09-01</a-timeline-item>-->
+    <!--          <a-timeline-item color="green">Create a services site 2015-09-01</a-timeline-item>-->
+    <!--          <a-timeline-item color="red">-->
+    <!--            <p>Solve initial network problems 1</p>-->
+    <!--            <p>Solve initial network problems 2</p>-->
+    <!--            <p>Solve initial network problems 3 2015-09-01</p>-->
+    <!--          </a-timeline-item>-->
+    <!--          <a-timeline-item>-->
+    <!--            <p>Technical testing 1</p>-->
+    <!--            <p>Technical testing 2</p>-->
+    <!--            <p>Technical testing 3 2015-09-01</p>-->
+    <!--          </a-timeline-item>-->
+    <!--          <a-timeline-item color="gray">-->
+    <!--            <p>Technical testing 1</p>-->
+    <!--            <p>Technical testing 2</p>-->
+    <!--            <p>Technical testing 3 2015-09-01</p>-->
+    <!--          </a-timeline-item>-->
+    <!--          <a-timeline-item color="gray">-->
+    <!--            <p>Technical testing 1</p>-->
+    <!--            <p>Technical testing 2</p>-->
+    <!--            <p>Technical testing 3 2015-09-01</p>-->
+    <!--          </a-timeline-item>-->
+    <!--        </a-timeline>-->
+    <!--      </TransparentCard>-->
+    <!--    </a-affix>-->
   </div>
 </template>
 
@@ -102,11 +99,11 @@ export default defineComponent({
     WeiboOutlined,
     CloudOutlined
   },
-  setup(){
+  setup() {
     const top = ref<number>(10);
     return {
       top
-    }
+    };
   }
 });
 </script>
@@ -119,8 +116,10 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     align-items: center;
+
     .info_item {
       margin: 5px 0;
+
       a {
         display: inline-block;
         margin-left: 5px;

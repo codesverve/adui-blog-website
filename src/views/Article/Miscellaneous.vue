@@ -4,17 +4,16 @@
   </TransparentCard>
   <a-affix :offset-top="top">
     <TransparentCard style="max-height: 500px;overflow-y: auto;">
-      <a-list item-layout="horizontal" :data-source="data">
+      <div class="card_title"><StarOutlined style="margin-right: 5px;" />推荐</div>
+      <a-divider style="margin: 0;" />
+      <a-list item-layout="horizontal" :data-source="recommendList">
         <template #renderItem="{ item }">
           <a-list-item>
             <a-list-item-meta
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                :description="item.description"
             >
               <template #title>
-                <a href="https://www.antdv.com/">{{ item.title }}</a>
-              </template>
-              <template #avatar>
-                <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                <a @click="goToDetails(item.id)">{{ item.topic }}</a>
               </template>
             </a-list-item-meta>
           </a-list-item>
@@ -25,36 +24,50 @@
 </template>
 
 <script lang="ts">
-import { Moment } from 'moment';
-import {defineComponent, ref} from "vue";
-interface DataItem {
-  title: string;
-}
-const data: DataItem[] = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  }
-];
+import {defineComponent, onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {articleListByRecommend} from '@/api/article';
+import {Moment} from 'moment';
+import {StarOutlined} from '@ant-design/icons-vue';
+
+
 export default defineComponent({
-  name: "Miscellaneous",
-  setup(){
+  name: 'Miscellaneous',
+  components:{
+    StarOutlined
+  },
+  setup() {
+    const router = useRouter();
+
     const value = ref<Moment>();
     const onPanelChange = (value: Moment, mode: string) => {
       console.log(value, mode);
     };
+
+    const recommendList = ref<[]>([]);
+    const getArticleListByRecommend = async () => {
+      const res = await articleListByRecommend();
+      recommendList.value = res.data;
+    };
+
+    const goToDetails = (articleId: number) => {
+      router.push({name: 'Article', params: {articleId}});
+    };
+
+    onMounted(() => {
+      getArticleListByRecommend();
+    });
 
     const top = ref(10);
     return {
       value,
       onPanelChange,
       top,
-      data
-    }
+      recommendList,
+      goToDetails
+    };
   }
-})
+});
 </script>
 
 <style scoped lang="less">

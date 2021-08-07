@@ -3,41 +3,95 @@
     <div class="header_main">
       <img class="logo" src="../assets/logo.png" alt="ADui" @click="goBackHome">
       <div class="header_title">ADui Blog</div>
-      <a-input-search
+      <a-auto-complete
           v-model:value="value"
-          placeholder="input search text"
-          enter-button
-          style="width: 300px"
+          class="global-search"
+          style="width: 300px;"
+          option-label-prop="title"
+          @select="onSelect"
           @search="onSearch"
-      />
+          @change="onChange"
+      >
+      <template #options>
+        <a-select-option v-for="item in dataSource" :key="item.topic">
+        </a-select-option>
+      </template>
+      <a-input-search placeholder="这里输入关键字搜索相关文章哦" enterButton></a-input-search>
+    </a-auto-complete>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
-import {useRouter} from "vue-router";
+import {defineComponent, reactive, ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {articleListByKeywords} from '@/api/article';
+
+interface Option {
+  id: number;
+  topic: string;
+}
 
 export default defineComponent({
   name: 'Header',
   setup() {
-    const router = useRouter()
+    const router = useRouter();
 
     const value = ref('');
 
-    const onSearch = (searchValue: string) => {
-      console.log('use value', searchValue);
-      console.log('or use this.value', value.value);
+    const dataSource = ref<Option[]>([]);
+
+    let keywords = ref<string>('');
+
+    const onChange = (value: string) => {
+      if (value) {
+        getArticleListByKeywords(value);
+      } else {
+        dataSource.value = [];
+      }
     };
 
-    const goBackHome = ()=>{
-      router.push({name: 'Home'})
-    }
+    const onSelect = (value: string) => {
+      dataSource.value.map(x => {
+        if (x.topic === value) {
+          return router.push({name: 'Article', params: {articleId: x.id}});
+        }
+      });
+    };
 
+    const onSearch = (searchValue: string) => {
+      keywords.value = searchValue;
+    };
+
+    const goBackHome = () => {
+      router.push({name: 'Home'});
+    };
+
+    const pagination = reactive({
+      onChange: (page: number) => {
+        console.log(page);
+      },
+      current: 1,
+      pageSize: 5,
+      total: 0,
+    });
+
+    let loading = ref<Boolean>(false);
+
+    const getArticleListByKeywords = async (keywords: string) => {
+      loading.value = true;
+      const res = await articleListByKeywords({pageSize: pagination.pageSize, pageNum: pagination.current, keywords});
+      dataSource.value = res.data.result.articleList;
+      pagination.total = res.data.result.total;
+      loading.value = false;
+    };
 
     return {
       value,
+      onChange,
       onSearch,
+      onSelect,
+      dataSource,
       goBackHome
     };
   },
@@ -81,7 +135,6 @@ export default defineComponent({
 
       /deep/ .ant-input {
         background-color: rgba(0, 0, 0, 0);
-        color: #fff;
       }
     }
   }

@@ -3,17 +3,17 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onMounted} from 'vue';
+import {defineComponent, ref, onMounted, PropType, watch} from 'vue';
 // 按需引用
 import * as echarts from 'echarts/core';
 import {
   CalendarComponent,
   TooltipComponent,
-  VisualMapComponent
+  VisualMapComponent,
 } from 'echarts/components';
 import {
   HeatmapChart,
-  HeatmapSeriesOption
+  HeatmapSeriesOption,
 } from 'echarts/charts';
 import {
   CanvasRenderer
@@ -28,22 +28,11 @@ echarts.use(
 
 export default defineComponent({
   name: 'CalendarChart',
-  setup() {
-    function getVirtualData(year: number | string) {
-      year = year || '2017';
-      let date = +echarts.number.parseDate(year + '-01-01');
-      let end = +echarts.number.parseDate(year + '-12-31');
-      let dayTime = 3600 * 24 * 1000;
-      let data = [];
-      for (let time = date; time <= end; time += dayTime) {
-        data.push([
-          echarts.format.formatTime('yyyy-MM-dd', time, false),
-          Math.floor(Math.random() * 10)
-        ]);
-      }
-      return data;
-    }
-
+  props: {
+    data: Array as PropType<HeatmapSeriesOption['data']>,
+    year: String
+  },
+  setup(props) {
     const options: ECOption = {
       tooltip: {
         position: 'top',
@@ -56,7 +45,7 @@ export default defineComponent({
         min: 0,
         max: 10,
         show: false,
-        color:['#99FF99','#99FF66','#99FF00']
+        color: ['#99FF99', '#99FF66', '#99FF00']
       },
       calendar: [{
         width: '100%',
@@ -75,7 +64,7 @@ export default defineComponent({
         type: 'heatmap',
         coordinateSystem: 'calendar',
         calendarIndex: 0,
-        data: getVirtualData(2021)
+        data: props.data
       }]
     };
     const chartDom = ref<any>();

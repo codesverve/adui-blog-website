@@ -69,6 +69,9 @@ export default defineComponent({
 
 </script>
 <style lang="less">
+#app {
+  min-width: 1400px;
+}
 .ant-back-top-inner {
   height: 40px;
   width: 40px;

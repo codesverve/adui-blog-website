@@ -1,59 +1,32 @@
 <template>
   <div class="miscellaneous">
     <TransparentCard>
+      <div class="card_title">全部分类</div>
+      <a-divider style="margin: 0;" />
       <a-tree
+          v-if="categoryTree.length>0"
           :show-line="false"
           :show-icon="true"
-          :default-expanded-keys="['0-0-0', '0-0-1', '0-0-2']"
+          :tree-data="categoryTree"
+          defaultExpandAll
           @select="onSelect"
       >
-      <template #icon><TagOutlined /></template>
-      <a-tree-node key="0-0">
-        <template #icon><TagOutlined /></template>
-        <template #title>parent 1</template>
-        <a-tree-node title="parent 1-0" key="0-0-0">
-          <template #icon><TagOutlined /></template>
-          <a-tree-node title="leaf" key="0-0-0-0">
-            <template #icon><TagOutlined /></template>
-          </a-tree-node>
-          <a-tree-node title="leaf" key="0-0-0-1">
-            <template #icon><TagOutlined /></template>
-          </a-tree-node>
-          <a-tree-node title="leaf" key="0-0-0-2">
-            <template #icon><TagOutlined /></template>
-          </a-tree-node>
-        </a-tree-node>
-        <a-tree-node title="parent 1-1" key="0-0-1">
-          <template #icon><TagOutlined /></template>
-          <a-tree-node title="leaf" key="0-0-1-0">
-            <template #icon><TagOutlined /></template>
-          </a-tree-node>
-        </a-tree-node>
-        <a-tree-node title="parent 1-2" key="0-0-2">
-          <template #icon><TagOutlined /></template>
-          <a-tree-node title="leaf" key="0-0-2-0">
-            <template #icon><TagOutlined /></template>
-          </a-tree-node>
-          <a-tree-node title="leaf" key="0-0-2-1">
-            <template #icon><TagOutlined /></template>
-          </a-tree-node>
-        </a-tree-node>
-      </a-tree-node>
-    </a-tree>
+        <template #tags><TagsOutlined /></template>
+        <template #tag><TagOutlined /></template>
+      </a-tree>
     </TransparentCard>
     <a-affix :offset-top="top">
       <TransparentCard style="max-height: 500px;overflow-y: auto;">
-        <a-list item-layout="horizontal" :data-source="data">
+        <div class="card_title"><StarOutlined style="margin-right: 5px;" />推荐</div>
+        <a-divider style="margin: 0;" />
+        <a-list item-layout="horizontal" :data-source="recommendList">
           <template #renderItem="{ item }">
             <a-list-item>
               <a-list-item-meta
-                  description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                  :description="item.description"
               >
                 <template #title>
-                  <a href="https://www.antdv.com/">{{ item.title }}</a>
-                </template>
-                <template #avatar>
-                  <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                  <a @click="goToDetails(item.id)">{{ item.topic }}</a>
                 </template>
               </a-list-item-meta>
             </a-list-item>
@@ -65,41 +38,63 @@
 </template>
 
 <script lang="ts">
+import {defineComponent, onMounted, ref} from 'vue';
+import {categoryList} from '@/api/home';
+import {articleListByRecommend} from '@/api/article';
+import {useStore} from 'vuex';
 import {
-  TagOutlined
+  TagOutlined,
+  TagsOutlined,
+  StarOutlined
 } from '@ant-design/icons-vue';
-import { SelectEvent } from 'ant-design-vue/es/tree/Tree';
-import {defineComponent,ref} from 'vue';
-interface DataItem {
-  title: string;
-}
-const data: DataItem[] = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  }
-];
+import {useRouter} from 'vue-router';
+
 export default defineComponent({
   name: 'Miscellaneous',
   components: {
-    TagOutlined
+    TagOutlined,
+    TagsOutlined,
+    StarOutlined
   },
-  setup(){
-    const onSelect = (selectedKeys: string[], info: SelectEvent) => {
-      console.log('selected', selectedKeys, info);
+  setup() {
+    const router = useRouter();
+    const store = useStore();
+    const onSelect = (selectedKeys: string[]) => {
+      store.dispatch('setCategoryId', selectedKeys[0]);
     };
     const top = ref<number>(10);
+    const categoryTree = ref([]);
+    const getCategoryList = async () => {
+      const res = await categoryList();
+      categoryTree.value = res.data.result;
+    };
+
+    const recommendList = ref<[]>([]);
+    const getArticleListByRecommend = async () => {
+      const res = await articleListByRecommend();
+      recommendList.value = res.data;
+    };
+    const goToDetails = (articleId: number) => {
+      router.push({name: 'Article', params: {articleId}});
+    };
+    onMounted(() => {
+      getCategoryList();
+      getArticleListByRecommend();
+    });
     return {
+      categoryTree,
       onSelect,
       top,
-      data
-    }
+      recommendList,
+      goToDetails
+    };
   }
 });
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+.card_title {
+  text-align: center;
+  font-weight: 700;
+}
 </style>

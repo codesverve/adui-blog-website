@@ -1,12 +1,22 @@
 <template>
-  <div class="transparent-card">
-    <slot></slot>
-  </div>
+  <a-spin :spinning="loading">
+    <div class="transparent-card">
+      <slot></slot>
+    </div>
+  </a-spin>
 </template>
 
 <script lang="ts">
-import {  Vue } from 'vue-class-component';
-export default class TransparentCard extends Vue {}
+import {Options, Vue } from 'vue-class-component';
+@Options({
+  props:{
+    loading:Boolean
+  }
+})
+
+export default class TransparentCard extends Vue {
+  loading!:Boolean
+}
 </script>
 
 <style scoped lang="less">
