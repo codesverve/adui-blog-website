@@ -74,5 +74,8 @@ export default defineComponent({
 /deep/ .ant-select.ant-fullcalendar-year-select.ant-select-sm {
   margin-bottom: 10px;
 }
-
+.card_title {
+  text-align: center;
+  font-weight: 700;
+}
 </style>
