@@ -90,7 +90,6 @@ import {
   WeiboOutlined,
   CloudOutlined
 } from '@ant-design/icons-vue';
-import Gitee from '@/icon/Gitee.vue';
 
 const MyIcon = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_1595263_74a744wwt7h.js', // 在 iconfont.cn 上生成
@@ -108,7 +107,6 @@ export default defineComponent({
     WechatOutlined,
     WeiboOutlined,
     CloudOutlined,
-    Gitee,
     MyIcon
   },
   setup() {
