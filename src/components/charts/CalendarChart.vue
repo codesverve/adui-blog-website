@@ -3,7 +3,8 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onMounted, PropType, watch} from 'vue';
+import {defineComponent, ref, onMounted, PropType, reactive} from 'vue';
+import moment from 'moment';
 // 按需引用
 import * as echarts from 'echarts/core';
 import {
@@ -33,7 +34,7 @@ export default defineComponent({
     year: String
   },
   setup(props) {
-    const options: ECOption = {
+    const options = reactive<ECOption>( {
       tooltip: {
         position: 'top',
         formatter: function(p: any) {
@@ -52,7 +53,7 @@ export default defineComponent({
         left: 'center',
         top: 'bottom',
         cellSize: 20,
-        range: '2021',
+        range: [`${props.year}-01-01`,moment().format('YYYY-MM-DD')],
         monthLabel: {
           nameMap: 'cn'
         },
@@ -66,7 +67,7 @@ export default defineComponent({
         calendarIndex: 0,
         data: props.data
       }]
-    };
+    });
     const chartDom = ref<any>();
     const calendarChart = ref<any>();
     onMounted(() => {
