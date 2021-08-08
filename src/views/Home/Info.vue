@@ -29,6 +29,10 @@
           ADui_ADui
         </div>
         <div class="info_item">
+          <MyIcon type="icon-gitee2" />
+          <a href="https://gitee.com/aduia" target="_blank">阿怼丶</a>
+        </div>
+        <div class="info_item">
           <GithubOutlined />
           <a href="https://github.com/Laird-Lee" target="_blank">Laird-Lee</a>
         </div>
@@ -73,6 +77,8 @@
 </template>
 
 <script lang="ts">
+import {defineComponent, ref} from 'vue';
+import { createFromIconfontCN } from '@ant-design/icons-vue';
 import {
   UserOutlined,
   EnvironmentOutlined,
@@ -84,7 +90,11 @@ import {
   WeiboOutlined,
   CloudOutlined
 } from '@ant-design/icons-vue';
-import {defineComponent, ref} from 'vue';
+import Gitee from '@/icon/Gitee.vue';
+
+const MyIcon = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_1595263_74a744wwt7h.js', // 在 iconfont.cn 上生成
+});
 
 export default defineComponent({
   name: 'Home',
@@ -97,7 +107,9 @@ export default defineComponent({
     QqOutlined,
     WechatOutlined,
     WeiboOutlined,
-    CloudOutlined
+    CloudOutlined,
+    Gitee,
+    MyIcon
   },
   setup() {
     const top = ref<number>(10);
