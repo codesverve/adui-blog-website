@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 // 重置样式
 import './styles/normalize.css';
+import './styles/loading.css';
 // 引用 Antd 2.x
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.less';

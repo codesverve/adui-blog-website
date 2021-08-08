@@ -82,13 +82,11 @@ export default defineComponent({
 
     const pagination = reactive({
       onChange: (page: number) => {
-        console.log(page);
+        pagination.current = page
       },
       current: 1,
-      pageSize: 5,
+      pageSize: 10,
       total: 0,
-      pageSizeOptions: ['1', '5', '10', '15'],
-      showSizeChanger: true,
       showQuickJumper: true,
       showTotal
     });
@@ -130,7 +128,7 @@ export default defineComponent({
       router.push({name: 'Article', params: {articleId}});
     };
 
-    watch(() => store.getters.selectedCategory, (newVal) => {
+    watch([() => store.getters.selectedCategory,pagination], ([newVal,paginationNewVal]) => {
       if (newVal) {
         getArticleListByCategory(newVal);
       } else {
@@ -170,5 +168,8 @@ export default defineComponent({
 .year_dropdown {
   text-align: right;
   margin-bottom: 10px;
+}
+/deep/ .ant-list-pagination {
+  text-align: center;
 }
 </style>
