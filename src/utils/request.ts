@@ -3,7 +3,7 @@ import router from '@/router';
 
 const $http = axios.create({
   // baseURL: 'http://localhost:8889/adui-blog'
-  baseURL: 'https://81.68.71.52:8889/adui-blog'
+  baseURL: 'http://81.68.71.52:8889/adui-blog'
 });
 
 $http.interceptors.request.use((config: AxiosRequestConfig) => {
