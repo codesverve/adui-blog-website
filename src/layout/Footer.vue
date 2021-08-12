@@ -3,7 +3,7 @@
     <CopyrightOutlined />
     阿怼
     <a-divider type="vertical" style="background-color: #fff" />
-    <img src="../assets/备案图标.png" alt="">
+<!--    <img src="../assets/备案图标.png" alt="">-->
     <a href="https://beian.miit.gov.cn" target="_blank" style="color: #fff;">晋ICP备2021013350号-1</a>
   </div>
 </template>
