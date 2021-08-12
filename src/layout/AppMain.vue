@@ -14,5 +14,6 @@ export default {
 .app_main {
   width: 1400px;
   margin: 20px auto;
+  padding-bottom: 20px;
 }
 </style>
