@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onMounted} from 'vue';
+import {defineComponent, ref, onMounted, watch} from 'vue';
 import {useRoute} from 'vue-router';
 import {articleDetails, articleLike, articleDislike, articleReads} from '@/api/article';
 import {FireOutlined, LikeOutlined, DislikeOutlined} from '@ant-design/icons-vue';
@@ -36,7 +36,7 @@ export default defineComponent({
     DislikeOutlined
   },
   setup() {
-    const router = useRoute();
+    const route = useRoute();
     const content = ref<string>();
     const reads = ref<number>();
     const like = ref<number>();
@@ -53,21 +53,24 @@ export default defineComponent({
     };
 
     const addArticleLike = async (articleId: string | string[]) => {
-      const res = await articleLike({articleId: router.params.articleId});
+      const res = await articleLike({articleId: route.params.articleId});
     };
 
     const addArticleDislike = async () => {
-      const res = await articleDislike({articleId: router.params.articleId});
+      const res = await articleDislike({articleId: route.params.articleId});
     };
 
     const addArticleReads = async () => {
-      const res = await articleReads({articleId: router.params.articleId});
+      const res = await articleReads({articleId: route.params.articleId});
     };
 
     onMounted(() => {
-      getArticleDetails(router.params.articleId);
+      getArticleDetails(route.params.articleId);
       addArticleReads();
     });
+    watch(()=>route.params,(newVal)=>{
+      getArticleDetails(newVal.articleId);
+    })
     return {
       content,
       reads,

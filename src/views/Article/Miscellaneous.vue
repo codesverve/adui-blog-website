@@ -51,7 +51,7 @@ export default defineComponent({
     };
 
     const goToDetails = (articleId: number) => {
-      router.push({name: 'Article', params: {articleId}});
+      router.push({name: 'Article', params: {articleId},replace:true});
     };
 
     onMounted(() => {
