@@ -21,7 +21,7 @@
     <TransparentCard>
       <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="articleData"
               :loading="loading">
-        <template #renderItem="{ item }">
+        <template #renderItem="{ item, index }">
           <a-list-item key="item.title">
             <template #actions>
               <span v-for="{ type, text } in item.actions" :key="type">
@@ -30,11 +30,7 @@
               </span>
             </template>
             <template #extra>
-<!--              <img-->
-              <!--                  width="272"-->
-              <!--                  alt="logo"-->
-              <!--                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"-->
-              <!--              />-->
+              <div :class="`article_img item_${index+1}`">{{ item.topic }}</div>
             </template>
             <a-list-item-meta>
               <template #title>
@@ -165,11 +161,29 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
+@random255:`Math.ceil(Math.random()*255)`;
+@len:10;
 .year_dropdown {
   text-align: right;
   margin-bottom: 10px;
 }
 /deep/ .ant-list-pagination {
   text-align: center;
+}
+.article_img {
+  width: 272px;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  word-break: break-word;
+  padding: 20px;
+  font-size: 18px;
+  each(range(10),{
+    &.item_@{value} {
+      background: rgba(@random255,@random255,@random255,.5);
+    }
+  })
 }
 </style>

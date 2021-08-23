@@ -30,5 +30,6 @@ export default defineComponent({
   background-color: #2f2f2f;
   text-align: center;
   color: #fff;
+  z-index: 999;
 }
 </style>
