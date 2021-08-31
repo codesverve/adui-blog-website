@@ -45,10 +45,10 @@ export default defineComponent({
     const getArticleDetails = async (articleId: string | string[]) => {
       loading.value = true;
       const {data:res} = await articleDetails({articleId});
-      content.value = res.resule.content;
-      reads.value = res.resule.article_reads;
-      like.value = res.resule.article_like;
-      dislike.value = res.resule.article_dislike;
+      content.value = res.result.content;
+      reads.value = res.result.article_reads;
+      like.value = res.result.article_like;
+      dislike.value = res.result.article_dislike;
       loading.value = false;
     };
 
