@@ -91,29 +91,29 @@ export default defineComponent({
     let articleData = ref([]);
     const getArticleList = async () => {
       loading.value = true;
-      const res = await articleList({pageSize: pagination.pageSize, pageNum: pagination.current});
-      res.data.result.articleList.forEach((x: any) => {
+      const {data:res} = await articleList({pageSize: pagination.pageSize, pageNum: pagination.current});
+      res.result.articleList.forEach((x: any) => {
         x.actions = [
           {type: 'LikeOutlined', text: x.articleLike},
           {type: 'DislikeOutlined', text: x.articleDislike},
         ];
       });
-      articleData.value = res.data.result.articleList;
-      pagination.total = res.data.result.total;
+      articleData.value = res.result.articleList;
+      pagination.total = res.result.total;
       loading.value = false;
     };
 
     const getArticleListByCategory = async (categoryId: number) => {
       loading.value = true;
-      const res = await articleListByCategory({pageSize: pagination.pageSize, pageNum: pagination.current, categoryId});
-      res.data.result.articleList.forEach((x: any) => {
+      const {data:res} = await articleListByCategory({pageSize: pagination.pageSize, pageNum: pagination.current, categoryId});
+      res.result.articleList.forEach((x: any) => {
         x.actions = [
           {type: 'LikeOutlined', text: x.articleLike},
           {type: 'DislikeOutlined', text: x.articleDislike},
         ];
       });
-      articleData.value = res.data.result.articleList;
-      pagination.total = res.data.result.total;
+      articleData.value = res.result.articleList;
+      pagination.total = res.result.total;
       loading.value = false;
     };
 
@@ -135,8 +135,8 @@ export default defineComponent({
     const statistics = ref<[]>([])
     const loadingChart = ref<Boolean>(false)
     const getArticleStatistics = async() => {
-      const res = await articleStatistics()
-      statistics.value = res.data
+      const {data:res} = await articleStatistics()
+      statistics.value = res.result
       loadingChart.value = true
     };
 

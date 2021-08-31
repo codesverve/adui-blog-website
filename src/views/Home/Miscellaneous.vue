@@ -65,14 +65,14 @@ export default defineComponent({
     const top = ref<number>(10);
     const categoryTree = ref([]);
     const getCategoryList = async () => {
-      const res = await categoryList();
-      categoryTree.value = res.data.result;
+      const {data:res} = await categoryList();
+      categoryTree.value = res.result;
     };
 
     const recommendList = ref<[]>([]);
     const getArticleListByRecommend = async () => {
-      const res = await articleListByRecommend();
-      recommendList.value = res.data;
+      const {data:res} = await articleListByRecommend();
+      recommendList.value = res.result;
     };
     const goToDetails = (articleId: number) => {
       router.push({name: 'Article', params: {articleId}});

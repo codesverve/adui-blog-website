@@ -44,11 +44,11 @@ export default defineComponent({
     const loading = ref<Boolean>(false);
     const getArticleDetails = async (articleId: string | string[]) => {
       loading.value = true;
-      const res = await articleDetails({articleId});
-      content.value = res.data.content;
-      reads.value = res.data.article_reads;
-      like.value = res.data.article_like;
-      dislike.value = res.data.article_dislike;
+      const {data:res} = await articleDetails({articleId});
+      content.value = res.resule.content;
+      reads.value = res.resule.article_reads;
+      like.value = res.resule.article_like;
+      dislike.value = res.resule.article_dislike;
       loading.value = false;
     };
 

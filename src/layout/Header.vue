@@ -80,9 +80,9 @@ export default defineComponent({
 
     const getArticleListByKeywords = async (keywords: string) => {
       loading.value = true;
-      const res = await articleListByKeywords({pageSize: pagination.pageSize, pageNum: pagination.current, keywords});
-      dataSource.value = res.data.result.articleList;
-      pagination.total = res.data.result.total;
+      const {data:res} = await articleListByKeywords({pageSize: pagination.pageSize, pageNum: pagination.current, keywords});
+      dataSource.value = res.result.articleList;
+      pagination.total = res.result.total;
       loading.value = false;
     };
 

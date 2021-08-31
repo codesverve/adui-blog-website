@@ -46,8 +46,8 @@ export default defineComponent({
 
     const recommendList = ref<[]>([]);
     const getArticleListByRecommend = async () => {
-      const res = await articleListByRecommend();
-      recommendList.value = res.data;
+      const {data:res} = await articleListByRecommend();
+      recommendList.value = res.result;
     };
 
     const goToDetails = (articleId: number) => {
