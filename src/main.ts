@@ -63,7 +63,7 @@ VMdEditor.use(vuepressTheme, {
   Hljs: hljs,
   Prism,
   codeHighlightExtensionMap: {
-    vue: 'xml',
+    vue: 'html',
   },
 });
 VMdEditor.use(createEmojiPlugin());
