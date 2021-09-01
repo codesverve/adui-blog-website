@@ -62,6 +62,9 @@ VMdEditor.Codemirror = Codemirror;
 VMdEditor.use(vuepressTheme, {
   Hljs: hljs,
   Prism,
+  codeHighlightExtensionMap: {
+    vue: 'xml',
+  },
 });
 VMdEditor.use(createEmojiPlugin());
 VMdEditor.use(createKatexPlugin());
